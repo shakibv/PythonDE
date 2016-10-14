@@ -65,9 +65,7 @@ class DEvolution(object):
 
     def Optimize(self, maxGen):
         """Starts the optimization process"""
-
-        for tmp in self(maxGen):
-            pass
+        for tmp in self(maxGen): pass
         return self._population[self._minIndex, :], self._fitness[self._minIndex]
 
     def __call__(self, maxGen = None):
@@ -75,27 +73,27 @@ class DEvolution(object):
 
     def _iterate(self, maxGen):
         """Iterating the optimization algorithm for maxGen generations"""
-
         # Automatic handling between Generator/Coroutine/Normal modes of operation
         while (((type(maxGen) == int) and (maxGen > 0)) or (maxGen == None)):
 
             # Initializing the fitness vectors
             if (self._iterationNum == 0):
-                self._extFitness = (yield self._population)
+                for i in range(self.nPopulation):
+                    self._extFitness = (yield self._population[i,:])
+                    if (self._extFitness is None): break
+                    self._fitness[i] = self.m * self._extFitness
                 self._iterationNum += 1
             else:
-                self._extFitness = (yield self._trialPopulation)
+                for i in range(self.nPopulation):
+                    self._extFitness = (yield self._trialPopulation[i,:])
+                    if (self._extFitness is None): break
+                    self._trialFitness[i] = self.m * self._extFitness
                 self._iterationNum += 1
 
             # Check if the optimizer is used in coroutine mode
             if (self._extFitness is not None):
 
-                if (self._iterationNum == 1):
-                    self._fitness = self.m * self._extFitness
-                else:
-                    self._trialFitness = self.m * self._extFitness
-
-                if (self._iterationNum > 2):
+                if (self._iterationNum > 1):
                     mask = self._trialFitness < self._fitness
                     self._population[mask, :] = self._trialPopulation[mask, :]
                     self._fitness[mask] = self._trialFitness[mask]
@@ -130,8 +128,9 @@ class DEvolution(object):
             elif (maxGen != None):
 
                 maxGen -= 1
-                for i in range(self.nPopulation):
-                    self._fitness[i] = self.m * self.func(self._population[i, :])
+                if (self._iterationNum == 1):
+                    for i in range(self.nPopulation):
+                        self._fitness[i] = self.m * self.func(self._population[i, :])
 
                 for j in range(self.nPopulation):
 
