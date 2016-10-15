@@ -7,6 +7,7 @@ Differential evolution optimization (DE)
   * [Normal Mode](#example-usages-normal-mode)  
   * [Coroutine Mode](#coroutine-mode)
   * [Generator Mode](#generator-mode)
+* [Choice of Control Variables](#choice-of-control-variables)
 * [References](#references)  
 
 To Use
@@ -117,6 +118,11 @@ Finaly, to access the best-fit solution found by the algorithm we can simply acc
 
 Generator Mode
 --------------
+
+Choice of Control Variables
+---------------------------
+[[Storn, R., Price, K.]](#references):
+>It is interesting to note that DE’s control variables, nPopulation, F and CR, are not difficult to choose in order to obtain good results. According to our experience a reasonable choice for nPopulation is between 5xDimension and 10xDimension but nPopulation must be at least 4 to ensure that DE will have enough mutually different vectors with which to work. As for F, F = 0.5 is usually a good initial choice. If the population converges prematurely, then F and/or nPopulation should be increased. Values of F smaller than 0.4, like those greater than 1, are only occasionally effective. A good first choice for CR is 0.1, but since a large CR often speeds convergence, to first try CR = 0.9 or CR = 1.0 is appropriate in order to see if a quick solution is possible. For fastest convergence, it is best to pick the initial parameter range such that it covers the region of the suspected global optimum, although this choice doesn’t seem to be mandatory...
 
 References
 ----------
