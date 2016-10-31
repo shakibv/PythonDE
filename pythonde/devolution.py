@@ -23,7 +23,7 @@ class DEvolution(object):
         self.boundRange = np.tile(self.bounds[:, 1] - self.bounds[:, 0], [self.nPopulation, 1])
 
         self.nParameters = (self.bounds).shape[0]
-        self.nDimension = (self.bounds).shape[1]
+        self.nDimension = (self.bounds).shape[0]
 
         self.F = F
         self.CR = CR
