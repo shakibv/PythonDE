@@ -122,6 +122,13 @@ class DEvolution(object):
                     rnbr = int(random() * self.nDimension)
                     u[rnbr] = v[rnbr]
 
+                    # Applying constraints on the population vector
+                    for index, val in enumerate(u):
+                        if (val < self.bounds[index][0]):
+                            u[index] = self.bounds[index][0]
+                        elif (val > self.bounds[index][1]):
+                            u[index] = self.bounds[index][1]
+
                     self._trialPopulation[j, :] = u;
 
             # Check if the optimizer is used in normal mode
@@ -153,6 +160,13 @@ class DEvolution(object):
 
                     rnbr = int(random() * self.nDimension)
                     u[rnbr] = v[rnbr]
+
+                    # Applying constraints on the population vector
+                    for index, val in enumerate(u):
+                        if (val < self.bounds[index][0]):
+                            u[index] = self.bounds[index][0]
+                        elif (val > self.bounds[index][1]):
+                            u[index] = self.bounds[index][1]
 
                     self._trialPopulation[j, :] = u;
 
